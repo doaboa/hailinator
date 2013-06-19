@@ -14,10 +14,11 @@ end
 # 	puts "Here's one entry #{tweet.inspect} /n"
 # end
 
-
+require "csv"
 
 CSV.open("hailtweets.csv", "wb") do |csv|
+  csv << ["handle", "text", "url"]
 	Twitter.search("#hail", :count => 15, :result_type => "recent", ).results.map do |status|
+		csv << ["#{status.from_user}", "#{status.text}", "http://www.twitter.com/#{status.from_user}/status/#{status.id}"]
 	end
-	csv << ["#{status.from_user}", "#{status.text}"]
 end
