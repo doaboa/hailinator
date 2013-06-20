@@ -24,7 +24,7 @@ require "csv"
 
 CSV.open("hailtweets.csv", "wb") do |csv|
   csv << ["handle", "text", "url"]
-	Twitter.search("raptor bosh", :lang => "en", :count => 15, :result_type => "recent", ).results.map do |status|
+	Twitter.search("traffic", :lang => "en", :count => 15, :result_type => "recent", ).results.map do |status|
     csv << ["#{status.from_user}", "#{status.text}", "http://www.twitter.com/#{status.from_user}/status/#{status.id}"]
     Twitter.follow(status.from_user) 
     sleep 1
