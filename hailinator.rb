@@ -1,10 +1,8 @@
-
-
 require "koala"
 require "twitter"
 
 
-@graph = Koala::Facebook::API.new("CAACEdEose0cBAEFHmeMkjyhAyyoqL5xJoY8lpgHVCZA733eJqoEeFEAFfKZA2hqe20awotiZBYdaqZBR73wYsZC10a6GrMt8vr8ZCiute0zJZCrx7i7bP4YEDlWPmrJGaaiimZBN2sU6QwWYuauRYTfAPavwHjP2GUAK7uzjzvMhVAZDZD")
+@graph = Koala::Facebook::API.new(ENV["KOALA_API"])
 
 
 
@@ -23,16 +21,16 @@ require "twitter"
 
 
 # App ID: 451981254876272
-# App Secret: 2dd9ee634fce99560f7c1c3de9327cd8(reset)
+# App Secret: ENV["APP_SEC"] (reset)
 # https://mighty-gorge-8169.herokuapp.com/
 
 # Working twitter!!
 
 # Twitter.configure do |config|
-#   config.consumer_key = "NSY3WhUBhWyNToqypsXExQ"
-#   config.consumer_secret = "OsQpfXHUh57khynEIhCyP48sDI3tJ9PFsGpV6a3Q0A"
-#   config.oauth_token = "14168536-dXNmUPJt4VKrfk3ovz4QdyUQLLdLwFtF5EbBYtY8"
-#   config.oauth_token_secret = "h3n4TbyUMfQBEXrFEJaEiNe0IXCvRtXEyushJnoOSnw"
+#   config.consumer_key = ENV["TW_CK"]
+#   config.consumer_secret = ENV["TW_CS"]
+#   config.oauth_token = ENV["TW_OT"]
+#   config.oauth_token_secret = ENV["TW_OTS"]
 # end
 
 # require "csv"
