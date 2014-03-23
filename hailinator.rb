@@ -1,10 +1,35 @@
-require "koala"
 require "twitter"
+require "csv"
+
+# Pulls from the Twitter API & populates a .csv file
+
+ Twitter.configure do |config|
+   config.consumer_key = ENV["TW_CK"]
+   config.consumer_secret = ENV["TW_CS"]
+   config.oauth_token = ENV["TW_OT"]
+   config.oauth_token_secret = ENV["TW_OTS"]
+ end
 
 
-@graph = Koala::Facebook::API.new(ENV["KOALA_API"])
+ CSV.open("hailtweets.csv", "wb") do |csv|
+   csv << ["handle", "text", "url"]
+ 	Twitter.search("traffic", :lang => "en", :count => 15, :result_type => "recent", ).results.map do |status|
+     csv << ["#{status.from_user}", "#{status.text}", "http://www.twitter.com/#{status.from_user}/status/#{status.id}"]
+     Twitter.follow(status.from_user) 
+     sleep 1
+     Twitter.favorite(status.id)
+     sleep 1
+		
+ 	end
+ end
 
 
+
+
+# you can ignore/delete everything below this- just playing with the facebook API
+
+# require "koala"
+# @graph = Koala::Facebook::API.new(ENV["KOALA_API"])
 
 # profile = @graph.get_object("me")
 # friends = @graph.get_connections("me", "friends")
@@ -23,26 +48,3 @@ require "twitter"
 # App ID: 451981254876272
 # App Secret: ENV["APP_SEC"] (reset)
 # https://mighty-gorge-8169.herokuapp.com/
-
-# Working twitter!!
-
-# Twitter.configure do |config|
-#   config.consumer_key = ENV["TW_CK"]
-#   config.consumer_secret = ENV["TW_CS"]
-#   config.oauth_token = ENV["TW_OT"]
-#   config.oauth_token_secret = ENV["TW_OTS"]
-# end
-
-# require "csv"
-
-# CSV.open("hailtweets.csv", "wb") do |csv|
-#   csv << ["handle", "text", "url"]
-# 	Twitter.search("traffic", :lang => "en", :count => 15, :result_type => "recent", ).results.map do |status|
-#     csv << ["#{status.from_user}", "#{status.text}", "http://www.twitter.com/#{status.from_user}/status/#{status.id}"]
-#     Twitter.follow(status.from_user) 
-#     sleep 1
-#     Twitter.favorite(status.id)
-#     sleep 1
-		
-# 	end
-# end
